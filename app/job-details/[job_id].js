@@ -23,13 +23,15 @@ import useFetch from "../../hook/useFetch";
 const tabs = ["About", "Qualifications", "Responsibilities"];
 
 const JobDetails = () => {
-  const params = useLocalSearchParams();
+  const {job_id} = useLocalSearchParams();
+ 
   const router = useRouter();
 
   const { data, isLoading, error, refetch } = useFetch("job-details", {
-    job_id: params.id,
+    job_id: job_id || "default_id",  // provide a default or handle errors
   });
 
+  console.log(data);
   const [activeTab, setActiveTab] = useState(tabs[0]);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -37,6 +39,7 @@ const JobDetails = () => {
     setRefreshing(true);
     refetch()
     setRefreshing(false)
+    
   }, []);
 
 
